@@ -5,6 +5,7 @@
 // intended to be used with our ALU as our processor's register file.
 //
 // Alex Interrante-Grant
+// James Massucco
 // 10/08/2015
 // ------------------------------------------------------------------------- //
 
@@ -12,6 +13,7 @@
 
 module reg_file(rst, clk, wr_en, rd_en, rd0_addr, rd1_addr, wr_addr, wr_data,
 	rd0_data, rd1_data);
+	
 	input rst, clk, wr_en, rd_en;
 	input [1:0] rd0_addr, rd1_addr, wr_addr;
 	input signed [8:0] wr_data;
@@ -20,11 +22,11 @@ module reg_file(rst, clk, wr_en, rd_en, rd0_addr, rd1_addr, wr_addr, wr_data,
 	integer i;
 	reg signed [8:0] registers [3:0];
 
-	always@(posedge clk, rst) begin
-		if(rst) for(i = 0; i < 4; i++) registers[i] = 0;
+	always@(posedge clk, negedge rst) begin
+		if(rst) for(i = 0; i < 4; i=i+1) registers[i] = 0;
 		// We only want to do this on a positive clock edge, we don't
 		// want it to be triggered by an async reset accidentally
-		if(clk) begin
+		else begin
 			// Ensure reading happens before writing does
 			if(rd_en) begin
 				rd0_data = registers[rd0_addr];

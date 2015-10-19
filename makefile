@@ -5,7 +5,7 @@ CC = iverilog
 DEBUG = 
 CFLAGS = $(DEBUG)
 
-all: $(NAME) $(TOP)
+all: 
 
 $(NAME): $(NAME).v $(NAME)_tb.v
 	$(CC) $(CFLAGS) $(NAME).v $(NAME)_tb.v -o $(NAME)
