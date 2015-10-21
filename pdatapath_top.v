@@ -37,7 +37,7 @@ wire [8:0] zero_register;
 
 wire MemtoReg;
 wire MemWrite;
-wire MemEN;
+//wire MemEN;
 
 wire [8:0] data_mem_out;
 
@@ -101,17 +101,18 @@ vio_0 vio(
 		.probe_out4(ALUSrc2),    // output wire [0 : 0] probe_out4
 		.probe_out5(ALUOp),    // output wire [2 : 0] probe_out5
 		.probe_out6(MemWrite),    // output wire [0 : 0] probe_out6
-		.probe_out7(MemEN),    // output wire [0 : 0] probe_out7
-		.probe_out8(MemtoReg),    // output wire [0 : 0] probe_out8
-		.probe_out9(regfile_read_address1),    // output wire [1 : 0] probe_out9
-		.probe_out10(regfile_read_address2),  // output wire [1 : 0] probe_out10
-		.probe_out11(regfile_write_address));  // output wire [1 : 0] probe_out11
+		//.probe_out7(MemEN),    // output wire [0 : 0] probe_out7
+		.probe_out7(MemtoReg),    // output wire [0 : 0] probe_out8
+		.probe_out8(regfile_read_address1),    // output wire [1 : 0] probe_out9
+		.probe_out9(regfile_read_address2),  // output wire [1 : 0] probe_out10
+		.probe_out10(regfile_write_address));  // output wire [1 : 0] probe_out11
 
 //Instantiate the Data Memory
 data_memory mem(
 		.clka(clk),    // input wire clka
 		.rsta(rst_general),    // input wire rsta
-		.ena(MemEN),      // input wire ena
+		//.ena(MemEN),      // input wire ena
+		.ena(1'b1),      // input wire ena
 		.wea(MemWrite),      // input wire [0 : 0] wea
 		.addra(alu_output),  // input wire [7 : 0] addra
 		.dina(read_data2),    // input wire [8 : 0] dina
