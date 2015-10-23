@@ -112,7 +112,6 @@ data_memory mem(
 		.clka(clk),    // input wire clka
 		.rsta(rst_general),    // input wire rsta
 		//.ena(MemEN),      // input wire ena
-		.ena(1'b1),      // input wire ena
 		.wea(MemWrite),      // input wire [0 : 0] wea
 		.addra(alu_output),  // input wire [7 : 0] addra
 		.dina(read_data2),    // input wire [8 : 0] dina
