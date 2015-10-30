@@ -49,7 +49,7 @@ module inst_decoder(
 				immediate = instruction[7:0];
 				RegDst = 0;
 				RegWrite = 0;
-				ALUSrc1 = 1;
+				ALUSrc1 = 0; //changed
 				ALUSrc2 = 1;
 				ALUOp = 0;
 				MemWrite = 1;
@@ -61,7 +61,7 @@ module inst_decoder(
 				rt_addr = instruction[9:8];
 				rd_addr = instruction[7:6];
 				immediate = 0;
-				RegDst = 0;
+				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 0;
@@ -89,7 +89,7 @@ module inst_decoder(
 				rt_addr = instruction[9:8];
 				rd_addr = instruction[7:6];
 				immediate = 0;
-				RegDst = 0;
+				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 0;
@@ -103,7 +103,7 @@ module inst_decoder(
 				rt_addr = instruction[9:8];
 				rd_addr = instruction[7:6];
 				immediate = 0;
-				RegDst = 0;
+				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 0;
@@ -120,7 +120,7 @@ module inst_decoder(
 				RegDst = 1;
 				RegWrite = 1;
 				ALUSrc1 = 0;
-				ALUSrc2 = 0;
+				ALUSrc2 = 1; //changed
 				ALUOp = 2;
 				MemWrite = 0;
 				MemToReg = 0;
@@ -131,7 +131,7 @@ module inst_decoder(
 				rt_addr = instruction[9:8];
 				rd_addr = instruction[7:6];
 				immediate = 0;
-				RegDst = 0;
+				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 0;
@@ -215,7 +215,7 @@ module inst_decoder(
 				rt_addr = instruction[9:8];
 				rd_addr = instruction[7:6];
 				immediate = 0;
-				RegDst = 0;
+				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 1;
 				ALUSrc2 = 0;
