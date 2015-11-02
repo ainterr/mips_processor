@@ -22,7 +22,7 @@ module reg_file(rst, clk, wr_en, rd_en, rd0_addr, rd1_addr, wr_addr, wr_data,
 	integer i;
 	reg signed [8:0] registers [3:0];
 
-	always@(posedge clk, negedge rst) begin
+	always@(posedge clk, posedge rst) begin
 		if(rst) for(i = 0; i < 4; i=i+1) registers[i] = 0;
 		// We only want to do this on a positive clock edge, we don't
 		// want it to be triggered by an async reset accidentally
