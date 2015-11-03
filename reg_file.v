@@ -21,18 +21,15 @@ module reg_file(rst, clk, wr_en, rd_en, rd0_addr, rd1_addr, wr_addr, wr_data,
 
 	integer i;
 	reg signed [8:0] registers [3:0];
+	
+	assign rd0_data = registers[rd0_addr];
+    	assign rd1_data = registers[rd1_addr];
 
 	always@(posedge clk, posedge rst) begin
 		if(rst) for(i = 0; i < 4; i=i+1) registers[i] = 0;
 		// We only want to do this on a positive clock edge, we don't
 		// want it to be triggered by an async reset accidentally
-		else begin
-			// Ensure reading happens before writing does
-			if(rd_en) begin
-				rd0_data = registers[rd0_addr];
-				rd1_data = registers[rd1_addr];
-			end
-			if(wr_en) registers[wr_addr] = wr_data;
-		end
+		
+		else if(wr_en) registers[wr_addr] = wr_data;
 	end
 endmodule
