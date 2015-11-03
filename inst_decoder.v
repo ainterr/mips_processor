@@ -26,13 +26,14 @@ module inst_decoder(
 
 	always @(instruction) begin
 		opcode = instruction[15:12];
+		rs_addr = instruction[11:10];
+        rt_addr = instruction[9:8];
+        rd_addr = instruction[7:6];
+        immediate = instruction[7:0];
+        
 		case (instruction[15:12])
 			0:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = 0;
-				immediate = instruction[7:0];
 				RegDst = 0;
 				RegWrite = 1;
 				ALUSrc1 = 0;
@@ -43,10 +44,6 @@ module inst_decoder(
 			end
 			1:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = 0;
-				immediate = instruction[7:0];
 				RegDst = 0;
 				RegWrite = 0;
 				ALUSrc1 = 0; //changed
@@ -57,10 +54,6 @@ module inst_decoder(
 			end
 			2:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = instruction[7:6];
-				immediate = 0;
 				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
@@ -71,11 +64,7 @@ module inst_decoder(
 			end
 			3:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = 0;
-				rd_addr = instruction[9:8];
-				immediate = instruction[7:0];
-				RegDst = 1;
+				RegDst = 0;
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 1;
@@ -85,10 +74,6 @@ module inst_decoder(
 			end
 			4:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = instruction[7:6];
-				immediate = 0;
 				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
@@ -99,10 +84,6 @@ module inst_decoder(
 			end
 			5:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = instruction[7:6];
-				immediate = 0;
 				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
@@ -113,11 +94,7 @@ module inst_decoder(
 			end
 			6:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = 0;
-				rd_addr = instruction[9:8];
-				immediate = instruction[7:0];
-				RegDst = 1;
+				RegDst = 0;
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 1; //changed
@@ -127,10 +104,6 @@ module inst_decoder(
 			end
 			7:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = instruction[7:6];
-				immediate = 0;
 				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 0;
@@ -141,25 +114,17 @@ module inst_decoder(
 			end
 			8:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = 0;
-				rd_addr = instruction[9:8];
-				immediate = instruction[7:0];
-				RegDst = 1;
+				RegDst = 0;
 				RegWrite = 1;
 				ALUSrc1 = 0;
-				ALUSrc2 = 1;
+				ALUSrc2 = 0;
 				ALUOp = 3;
 				MemWrite = 0;
 				MemToReg = 0;
 			end
 			9:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = 0;
-				rd_addr = instruction[9:8];
-				immediate = instruction[7:0];
-				RegDst = 1;
+				RegDst = 0;
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 1;
@@ -169,11 +134,7 @@ module inst_decoder(
 			end
 			10:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = 0;
-				rd_addr = instruction[9:8];
-				immediate = instruction[7:0];
-				RegDst = 1;
+				RegDst = 0;
 				RegWrite = 1;
 				ALUSrc1 = 0;
 				ALUSrc2 = 1;
@@ -183,10 +144,6 @@ module inst_decoder(
 			end
 			11:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = 0;
-				immediate = instruction[7:0];
 				RegDst = 0;
 				RegWrite = 0;
 				ALUSrc1 = 0;
@@ -197,10 +154,6 @@ module inst_decoder(
 			end
 			12:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = 0;
-				immediate = instruction[7:0];
 				RegDst = 0;
 				RegWrite = 0;
 				ALUSrc1 = 0;
@@ -211,10 +164,6 @@ module inst_decoder(
 			end
 			13:
 			begin
-				rs_addr = instruction[11:10];
-				rt_addr = instruction[9:8];
-				rd_addr = instruction[7:6];
-				immediate = 0;
 				RegDst = 1; //changed
 				RegWrite = 1;
 				ALUSrc1 = 1;
@@ -225,10 +174,6 @@ module inst_decoder(
 			end
 			default
 			begin
-				rs_addr = 0;
-				rt_addr = 0;
-				rd_addr = 0;
-				immediate = 0;
 				RegDst = 0;
 				RegWrite = 0;
 				ALUSrc1 = 0;
