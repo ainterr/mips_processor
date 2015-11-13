@@ -48,6 +48,8 @@ module pdatapath_top(
     wire [8:0] data_mem_out;
 
     wire pb_clk_debounced;
+    
+    wire [7:0] pc;
 
     debounce debounce_clk(
         .clk_in(clk),
@@ -92,6 +94,33 @@ module pdatapath_top(
 	//VIO Module
 	vio_0 vio_core (
       .clk(clk),                // input wire clk
+      .probe_in0(alu_output),    // input wire [7 : 0] probe_in0
+      .probe_in1(alu_ovf_flag),    // input wire [0 : 0] probe_in1
+      .probe_in2(alu_zero_output),    // input wire [0 : 0] probe_in2
+      .probe_in3(read_data1),    // input wire [7 : 0] probe_in3
+      .probe_in4(read_data2),    // input wire [7 : 0] probe_in4
+      .probe_in5(alu_1st_input),    // input wire [7 : 0] probe_in5
+      .probe_in6(alu_2nd_input),    // input wire [7 : 0] probe_in6
+      .probe_in7(read_data2),    // input wire [8 : 0] probe_in7
+      .probe_in8(data_mem_out),    // input wire [8 : 0] probe_in8
+      .probe_in9(opcode),    // input wire [2 : 0] probe_in9
+      .probe_in10(rs_addr),  // input wire [1 : 0] probe_in10
+      .probe_in11(rt_addr),  // input wire [1 : 0] probe_in11
+      .probe_in12(rd_addr),  // input wire [1 : 0] probe_in12
+      .probe_in13(immediate),  // input wire [7 : 0] probe_in13
+      .probe_in14(RegDst),  // input wire [0 : 0] probe_in14
+      .probe_in15(RegWrite),  // input wire [0 : 0] probe_in15
+      .probe_in16(ALUSrc1),  // input wire [0 : 0] probe_in16
+      .probe_in17(ALUSrc2),  // input wire [0 : 0] probe_in17
+      .probe_in18(ALUOp),  // input wire [0 : 0] probe_in18
+      .probe_in19(MemWrite),  // input wire [0 : 0] probe_in19
+      .probe_in20(MemToReg),  // input wire [0 : 0] probe_in20
+      .probe_in21(pc),  // input wire [7 : 0] probe_in21
+      .probe_in22(instruction)  // input wire [15 : 0] probe_in22
+    );
+	/*
+	vio_0 vio_core (
+      .clk(clk),                // input wire clk
       .probe_in0(regfile_write_data),    // input wire [8 : 0] probe_in0
       .probe_in1(read_data1[7:0]),    // input wire [7 : 0] probe_in1
       .probe_in2(read_data2[7:0]),    // input wire [7 : 0] probe_in2
@@ -102,7 +131,7 @@ module pdatapath_top(
       .probe_in7(alu_output),    // input wire [7 : 0] probe_in7
       .probe_in8(data_mem_out),    // input wire [8 : 0] probe_in8
       .probe_out0(instruction)  // output wire [15 : 0] probe_out0
-    );
+    );*/
 
 	assign alu_result = {alu_ovf_flag, alu_output};
 	
@@ -124,7 +153,15 @@ module pdatapath_top(
         .rd1_data(read_data2)//source register2 data
     );
     
-    data_memory data_memory (
+    data_memory_take2 data_memory (
+      .a(alu_output),      // input wire [7 : 0] a
+      .d(read_data2),      // input wire [8 : 0] d
+      .clk(pb_clk_debounced),  // input wire clk
+      .we(MemWrite),    // input wire we
+      .spo(data_mem_out)  // output wire [8 : 0] spo
+    );
+    /*
+    data_memory_take2 data_memory (
       .clka(pb_clk_debounced),    // input wire clka
       .rsta(right_pb_rst_general),    // input wire rsta
       .ena(1'b1),
@@ -133,5 +170,17 @@ module pdatapath_top(
       .dina(read_data2),    // input wire [8 : 0] dina
       .douta(data_mem_out)  // output wire [8 : 0] douta
     );
+    */
+    program_counter program_counter(
+        .clk(pb_clk_debounced),
+        .rst(right_pb_rst_general),
+        .value(pc)
+    );
+    
+    instr_memory inst_memory (
+      .clka(pb_clk_debounced),    // input wire clka
+      .rsta(right_pb_rst_general),    // input wire rsta
+      .addra(pc),  // input wire [7 : 0] addra
+      .douta(instruction) );    //ire [15 : 0] douta
 
 endmodule
