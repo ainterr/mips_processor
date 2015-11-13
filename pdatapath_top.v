@@ -6,7 +6,7 @@
 //
 // Alex Interrante-Grant
 // James Massucco
-// 10/19/2015
+// 11/13/2015
 // ------------------------------------------------------------------------- //
 
 `timescale 1ns / 1ps
@@ -118,20 +118,6 @@ module pdatapath_top(
       .probe_in21(pc),  // input wire [7 : 0] probe_in21
       .probe_in22(instruction)  // input wire [15 : 0] probe_in22
     );
-	/*
-	vio_0 vio_core (
-      .clk(clk),                // input wire clk
-      .probe_in0(regfile_write_data),    // input wire [8 : 0] probe_in0
-      .probe_in1(read_data1[7:0]),    // input wire [7 : 0] probe_in1
-      .probe_in2(read_data2[7:0]),    // input wire [7 : 0] probe_in2
-      .probe_in3(alu_1st_input),    // input wire [7 : 0] probe_in3
-      .probe_in4(alu_2nd_input),    // input wire [7 : 0] probe_in4
-      .probe_in5(alu_zero_output),    // input wire [0 : 0] probe_in5
-      .probe_in6(alu_ovf_flag),    // input wire [0 : 0] probe_in6
-      .probe_in7(alu_output),    // input wire [7 : 0] probe_in7
-      .probe_in8(data_mem_out),    // input wire [8 : 0] probe_in8
-      .probe_out0(instruction)  // output wire [15 : 0] probe_out0
-    );*/
 
 	assign alu_result = {alu_ovf_flag, alu_output};
 	
@@ -160,20 +146,12 @@ module pdatapath_top(
       .we(MemWrite),    // input wire we
       .spo(data_mem_out)  // output wire [8 : 0] spo
     );
-    /*
-    data_memory_take2 data_memory (
-      .clka(pb_clk_debounced),    // input wire clka
-      .rsta(right_pb_rst_general),    // input wire rsta
-      .ena(1'b1),
-      .wea(MemWrite),      // input wire [0 : 0] wea
-      .addra(alu_output),  // input wire [7 : 0] addra
-      .dina(read_data2),    // input wire [8 : 0] dina
-      .douta(data_mem_out)  // output wire [8 : 0] douta
-    );
-    */
+
     program_counter program_counter(
         .clk(pb_clk_debounced),
         .rst(right_pb_rst_general),
+	.branch_offs(immediate),
+	.ALU_zero(alu_zero_output),
         .value(pc)
     );
     
